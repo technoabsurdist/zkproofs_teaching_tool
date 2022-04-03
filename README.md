@@ -13,7 +13,7 @@
 
 ## Contract Link
 
-![https://rinkeby.etherscan.io/tx/0x62a808b2ad1d7a2c8584cafdff779569addaf069ede4f3bf6cfa8c7a2eed162d]
+https://rinkeby.etherscan.io/tx/0x62a808b2ad1d7a2c8584cafdff779569addaf069ede4f3bf6cfa8c7a2eed162d
 
 ## To Run 
 
