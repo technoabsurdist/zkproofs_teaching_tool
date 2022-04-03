@@ -1,6 +1,88 @@
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import { ethers } from "ethers";
+import abi from "./utils/Verifier.json";
 
 function App() {
+  const [currentAccount, setCurrentAccount] = useState("");
+
+  const contractAddress = "0x02153E75Fa557879a4E0309fA0f920B5dE25C727";
+  const contractABI = abi.abi;
+
+  const checkIfWalletIsConnected = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        console.log("Make sure you have metamask!");
+        return;
+      } else {
+        console.log("We have the ethereum object", ethereum);
+      }
+
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+
+      if (accounts.length !== 0) {
+        const account = accounts[0];
+        console.log("Found an authorized account:", account);
+        setCurrentAccount(account);
+      } else {
+        console.log("No authorized account found")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /**
+  * Implement your connectWallet method here
+  */
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+
+      console.log("Connected", accounts[0]);
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const verify2 = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const vContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        const r = await vContract.verifyProof(0, 0);
+
+        console.log("Mining...", r.hash);
+        await r.wait();
+
+        console.log("Mined --", r.hash);
+
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+  }, [])
+
   return (
     <div className="App">
       <h1>ZKProofs Interactive</h1>
@@ -25,19 +107,24 @@ function App() {
         organic scalability of blockchains in the future. <br />
 
       </p>
-
+      {/*
+        * If there is no currentAccount render this button
+        */}
+      {!currentAccount && (
+        <button className="metaButton" onClick={connectWallet}>
+          Connect Wallet
+        </button>
+      )}
       <h3>Try it out:</h3>
       <form>
         <label>
-          First Number:
-          <input type="text" name="name" />
+          <input placeholder="first number" type="text" name="name" />
         </label>
         <label>
-          Second Number:
-          <input type="text" name="name" /> <br />
+          <input placeholder="second number" type="text" name="name" /> <br />
           <br />
         </label>
-        <input type="submit" value="Submit" />
+        <button type="submit" value="Submit" onClick={verify2}>Submit</button>
         <br />
         <br />
       </form>

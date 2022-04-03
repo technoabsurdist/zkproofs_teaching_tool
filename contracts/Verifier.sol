@@ -289,6 +289,7 @@ contract Verifier {
         );
     }
 
+    // first button: input[0], second button: input[1]
     function verify(uint256[] input, Proof proof)
         internal
         view

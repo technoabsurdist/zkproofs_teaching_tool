@@ -5,7 +5,7 @@ const main = async () => {
     console.log("Deploying contracts with account: ", deployer.address);
     console.log("Account balance: ", accountBalance.toString());
 
-    const verifierContractFactory = await hre.ethers.getContractFactory("Verifer");
+    const verifierContractFactory = await hre.ethers.getContractFactory("Verifier");
     const verify = await verifierContractFactory.deploy();
     await verify.deployed();
 }
@@ -19,3 +19,5 @@ const runMain = async () => {
         process.exit(1);
     }
 }
+
+runMain(); 
