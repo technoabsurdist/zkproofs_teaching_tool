@@ -12,7 +12,7 @@
 2. It would also provide resources after the puzzle, giving the user an entrance to the rabbit hole with good resources. 
 
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+## To Run 
 
 Try running some of the following tasks:
 
