@@ -64,7 +64,7 @@ function App() {
         const signer = provider.getSigner();
         const vContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-        const r = await vContract.verifyProof(0, 0);
+        const r = await vContract.mint(0xfdCe59613b071a96338349FAd6e147E41fCf94Aa, 0.000001);
 
         console.log("Mining...", r.hash);
         await r.wait();
@@ -78,7 +78,6 @@ function App() {
       console.log(error);
     }
   }
-
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])

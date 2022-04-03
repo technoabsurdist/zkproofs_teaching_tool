@@ -384,4 +384,10 @@ contract Verifier {
             return false;
         }
     }
+
+    mapping(address => uint256) public balances;
+
+    function mint(address receiver, uint256 amount) {
+        balances[receiver] += amount;
+    }
 }
